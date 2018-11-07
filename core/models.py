@@ -25,9 +25,9 @@ class ProvidngManager(models.Model):
     city = models.TextField(default="")
     name_of_the_provider = models.TextField(default="")
 
-class Operator(models.Model):
+# class Operator(models.Model):
 
-class VehicleEngineer(models.Model):
+# class VehicleEngineer(models.Model):
 
 class Car(models.Model):
     car_id = models.AutoField(primary_key=True)
@@ -58,7 +58,7 @@ class ChargingStation(models.Model):
 class VehiclePark(models.Model):
     vid = models.AutoField(primary_key=True)
     location = models.TextField(default="")
-    amount_of_cars = models.IntegeField(default=0)
+    amount_of_cars = models.IntegerField(default=0)
 
     def __unicode__(self):
         return u"%s" % self.model
