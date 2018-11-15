@@ -4,14 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="845e3fb6-d4ed-4d5e-9a40-3cd549a13db7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CarSharing.iml" afterPath="$PROJECT_DIR$/.idea/CarSharing.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/core/admin.py" afterPath="$PROJECT_DIR$/core/admin.py" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0001_initial.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-    </list>
+    <list default="true" id="845e3fb6-d4ed-4d5e-9a40-3cd549a13db7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
