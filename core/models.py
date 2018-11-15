@@ -15,14 +15,14 @@ class VehicleEngineer(models.Model):
 
 
 class Workshop(models.Model):
-    workshopid = models.AutoField(primary_key=True)
+    workshopid = models.CharField(max_length=10, primary_key=True)
     country = models.TextField(default="")
     zipcode = models.CharField(max_length=30)
     city = models.TextField(default="")
 
 
 class ProvidngManager(models.Model):
-    companyid = models.AutoField(primary_key=True)
+    companyid = models.CharField(max_length=10, primary_key=True)
     country = models.TextField(default="")
     zipcode = models.CharField(max_length=30)
     city = models.TextField(default="")
@@ -39,7 +39,7 @@ class CarParts(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
 
 class ChargingStation(models.Model):
-    uid = models.AutoField(primary_key=True)
+    uid = models.CharField(max_length=10, primary_key=True)
     price = models.IntegerField(default=0)
     amount_of_available_sockets = models.IntegerField(default=0)
     gps_location = models.TextField(default="")
@@ -47,17 +47,17 @@ class ChargingStation(models.Model):
     shape_of_plug = models.TextField(default="")
 
 class VehiclePark(models.Model):
-    vid = models.AutoField(primary_key=True)
+    vid = models.CharField(max_length=10, primary_key=True)
     location = models.TextField(default="")
     amount_of_cars = models.IntegerField(default=0)
 
 class Car(models.Model):
-    car_id = models.AutoField(primary_key=True)
+    car_id = models.CharField(max_length=10, primary_key=True)
     model = models.TextField(default="")
     amount_of_places = models.IntegerField(default=4)
     color = models.TextField(default="white")
     engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
-    park = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
+    park = models.ForeignKey(VehiclePark, on_delete=models.CASCADE)
     charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
 
 class Operator(models.Model):
@@ -79,5 +79,5 @@ class Customer(models.Model):
 
 
 
-    def __unicode__(self):
-        return u"%s" % self.model
+def __unicode__(self):
+    return u"%s" % self.model
