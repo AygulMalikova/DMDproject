@@ -61,20 +61,31 @@ li.link {
 }
 
 .container.query {
+    width: 100%;
+    max-width: 1000px;
     min-height: 100vh;
-    background: white;
-    margin: 50px 100px;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 0px 104px -13px rgba(112,112,112,1);
     border-radius: 30px;
 }
 .text {
-    background: #f1f1f1;
-    margin: 50px 100px;
-    box-shadow: 0px 0px 104px -13px rgba(112,112,112,1);
-    /*border: solid 1px #000;*/
+    background: #e8e8e8;
+    margin: 50px 0;
+    box-shadow: 0px 0px 104px -13px rgb(150, 150, 150);
+    /* border: solid 1px #000; */
     padding: 0 15px;
     text-align: center;
-    border-radius: 7px;
+    border-radius: 3px;
+}
+.sql {
+    background: #dadada;
+    margin: 0 auto;
+    box-shadow: 0px 0px 104px -13px rgb(150, 150, 150);
+    padding: 0 15px;
+    text-align: center;
+    border-radius: 3px;
+    font-family: monospace;
+    width: 70%;
+    font-size: 20px;
 }
