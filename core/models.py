@@ -9,6 +9,9 @@ class Employee(models.Model):
     email = models.TextField(default="")
     phone_number = models.TextField(default="")
 
+    def __unicode__(self):
+        return u"%s" % self.username
+
 
 class VehicleEngineer(models.Model):
     info = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -20,6 +23,9 @@ class Workshop(models.Model):
     zipcode = models.CharField(max_length=30)
     city = models.TextField(default="")
 
+    def __unicode__(self):
+        return u"%s" % self.workshopid
+
 
 class ProvidngManager(models.Model):
     companyid = models.CharField(max_length=10, primary_key=True)
@@ -30,6 +36,9 @@ class ProvidngManager(models.Model):
     info = models.ForeignKey(Employee, on_delete=models.CASCADE)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
 
+    def __unicode__(self):
+        return u"%s" % self.companyid
+
 class CarParts(models.Model):
     type = models.TextField(default="")
     car_model = models.TextField(default="")
@@ -37,6 +46,9 @@ class CarParts(models.Model):
     color = models.TextField(default="white")
     engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return u"%s" % self.type
 
 class ChargingStation(models.Model):
     uid = models.CharField(max_length=10, primary_key=True)
@@ -46,10 +58,16 @@ class ChargingStation(models.Model):
     size_of_plug = models.TextField(default="")
     shape_of_plug = models.TextField(default="")
 
+    def __unicode__(self):
+        return u"%s" % self.uid
+
 class VehiclePark(models.Model):
     vid = models.CharField(max_length=10, primary_key=True)
     location = models.TextField(default="")
     amount_of_cars = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return u"%s" % self.vid
 
 class Car(models.Model):
     car_id = models.CharField(max_length=10, primary_key=True)
@@ -60,10 +78,16 @@ class Car(models.Model):
     park = models.ForeignKey(VehiclePark, on_delete=models.CASCADE)
     charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
 
+    def __unicode__(self):
+        return u"%s" % self.car_id
+
 class Operator(models.Model):
     parks = models.ManyToManyField(VehiclePark)
     cars = models.ManyToManyField(Car)
     info = models.ForeignKey(Employee, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return u"%s" % self.info
 
 class Customer(models.Model):
     username = models.CharField(max_length=10, primary_key=True)
@@ -77,7 +101,9 @@ class Customer(models.Model):
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
     car = models.OneToOneField(Car, on_delete=models.CASCADE)
 
+    def __unicode__(self):
+        return u"%s" % self.username
 
 
-def __unicode__(self):
-    return u"%s" % self.model
+
+
