@@ -10,13 +10,12 @@ def index(request):
 
 
 def query1(request):
-    from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidngManager, CarParts, Car, ChargingStation, Operator, Customer
+    from .queries import query1
     text = "A customer claims she forgot her bag in a car and asks to help. " \
            "She was using cars several times this day, " \
            "but she believes the right car was red and its plate starts with “AN”. " \
            "Find all possible cars that match the description."
-    cars = Car.objects.all().filter(car_plate__startswith='AN').filter(color = 'red')
-    context = {"text": text, "cars" : cars}
+    context = {"text": text, "cars" : query1()}
     return render(request, 'core/query.html', context)
 
 
