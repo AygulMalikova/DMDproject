@@ -89,3 +89,25 @@ li.link {
     width: 70%;
     font-size: 20px;
 }
+.table{
+    margin: 50px auto;
+    width: 100%;
+    box-shadow: 0px 0px 104px -13px rgb(150, 150, 150);
+    padding: 20px;
+
+    background: #e8e8e8;
+}
+thead {
+    font-size: 25px;
+    align-items: center;
+}
+thead tr {
+    line-height: 40px;
+}
+tbody {
+    margin: 30px 0;
+}
+tbody tr {
+    line-height: 30px;
+    text-align: center;
+}

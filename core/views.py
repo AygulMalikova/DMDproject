@@ -15,7 +15,8 @@ def query1(request):
            "She was using cars several times this day, " \
            "but she believes the right car was red and its plate starts with “AN”. " \
            "Find all possible cars that match the description."
-    context = {"text": text, "cars" : query1()}
+    # sql = "SELECT * FROM cars WHERE color = "
+    context = {"text": text, "query": query1()}
     return render(request, 'core/query.html', context)
 
 

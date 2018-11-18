@@ -17,6 +17,7 @@ class VehicleEngineer(models.Model):
     info = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
 
+
 class Workshop(models.Model):
     workshopid = models.CharField(max_length=10, primary_key=True)
     country = models.TextField(default="")
