@@ -28,12 +28,6 @@ class Workshop(models.Model):
     def __unicode__(self):
         return u"%s" % self.workshopid
 
-class Charge(models.Model):
-    car_id = models.TextField(default="")
-    uid = models.TextField(default="")
-    time = models.DateTimeField(default=datetime.now, blank=True)
-
-
 class ProvidngManager(models.Model):
     companyid = models.CharField(max_length=10, primary_key=True)
     country = models.TextField(default="")
@@ -83,10 +77,16 @@ class Car(models.Model):
     color = models.TextField(default="white")
     engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
     park = models.ForeignKey(VehiclePark, on_delete=models.CASCADE)
-    charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
     car_plate = models.TextField(default="")
     def __unicode__(self):
         return u"%s" % self.car_id
+
+class Charge(models.Model):
+    charge_id = models.CharField(max_length=10, primary_key=True)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
+    time = models.DateTimeField(default=datetime.now, blank=True)
+
 
 class Operator(models.Model):
     parks = models.ManyToManyField(VehiclePark)
