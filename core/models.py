@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Employee(models.Model):
@@ -26,6 +27,11 @@ class Workshop(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.workshopid
+
+class Charge(models.Model):
+    car_id = models.TextField(default="")
+    uid = models.TextField(default="")
+    time = models.DateTimeField(default=datetime.now, blank=True)
 
 
 class ProvidngManager(models.Model):
