@@ -89,16 +89,23 @@ li.link {
     width: 70%;
     font-size: 20px;
 }
+p {
+    font-family: monospace;
+    font-size: 20px;
+    white-space: pre-line;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
 .table{
     margin: 50px auto;
     width: 100%;
     box-shadow: 0px 0px 104px -13px rgb(150, 150, 150);
     padding: 20px;
-
     background: #e8e8e8;
 }
 thead {
-    font-size: 25px;
+    font-size: 23px;
     align-items: center;
 }
 thead tr {
@@ -110,4 +117,31 @@ tbody {
 tbody tr {
     line-height: 30px;
     text-align: center;
+}
+
+form {
+    position: relative;
+    width: 100%;
+    font-size: 40px;
+}
+.group {
+    margin: 0 auto;
+    position: relative;
+    width: 80%;
+}
+input {
+    width: 40px;
+}
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+
 }

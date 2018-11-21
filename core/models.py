@@ -78,6 +78,7 @@ class Car(models.Model):
     engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
     park = models.ForeignKey(VehiclePark, on_delete=models.CASCADE)
     car_plate = models.TextField(default="")
+
     def __unicode__(self):
         return u"%s" % self.car_id
 

@@ -7,39 +7,3 @@
     <link rel="stylesheet" href="../../static/styles.css">
 </head>
 <body>
-    <div class="container query">
-        <div class="text">
-            <h3>{{ text }}</h3>
-        </div>
-        <div class="sql">
-            <h4>
-                SELECT * FROM cars WHERE color = "
-                <select name="sql" id="">
-                    <option value="red">red</option>
-                    <option value="green">green</option>
-                    <option value="black">black</option>
-                </select>
-                ";
-            </h4>
-        </div>
-        <div class="container">
-            {% render_table query %}
-        </div>
-        <table>
-            <thead class="thead">
-                <tr>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="tbody">
-            <tr class="tr">
-                <td>
-                </td>
-            </tr>
-        </tbody>
-        </table>
-
-    </div>
-
-</body>
-</html>

@@ -1,8 +1,11 @@
+# coding=utf-8
 from django.shortcuts import render
-
+from .tables import CarTable
+from .form import query_1
+from .tables import ChargeTable
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 def index(request):
@@ -15,15 +18,25 @@ def query1(request):
            "She was using cars several times this day, " \
            "but she believes the right car was red and its plate starts with “AN”. " \
            "Find all possible cars that match the description."
-    # sql = "SELECT * FROM cars WHERE color = "
-    context = {"text": text, "query": query1()}
-    return render(request, 'core/query.html', context)
+    querytext = "   Car.objects.all()\n " + "   .filter(car_plate__startswith='AN')\n" + "  .filter(color='red')"
+    context = {"text": text, "querytext": querytext, "result": CarTable(query1())}
+
+    if request.method == 'GET':
+        return render(request, 'core/query1.html', context)
+
+    # if request.method == 'POST':
+    #     form = query_1(request.POST)
+    #     if form.is_valid():
+    #         textForm = form.cleaned_data['plate']
+    #         print (textForm)
+    #         return render(request, 'core/query1.html', context, {"textForm": textForm})
 
 
 def query2(request):
+    from .queries import query2
     text = "Company management wants to get a statistics on the efficiency of charging stations utilization. " \
            "Given a date, compute how many sockets were occupied each hour."
-    context = {'text': text}
+    context = {'text': text, "query": query2(date="1542574800000")}
     return render(request, 'core/query.html', context)
 
 
