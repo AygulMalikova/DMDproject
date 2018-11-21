@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load render_table from django_tables2 %}
+{% include 'core/header.html' %}
 
+<div class="container query">
+        <div class="text">
+            <h3>{{ text }}</h3>
+        </div>
+        <div class="sql">
+            <form action="/2/" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="group">
+                    <p>
+                        Charge.objects.all() <br>
+                    </p>
+                    <p>
+                        .filter(time__day='<input type="text" name="date" value="{{ date }}">') <br>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button id="apply">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            {% render_table result %}
+        </div>
+        <table>
+            <thead class="thead">
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            <tr class="tr">
+                <td>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
 </body>
 </html>

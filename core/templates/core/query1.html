@@ -1,24 +1,24 @@
 {% load render_table from django_tables2 %}
-{% include 'core/query.html' %}
+{% include 'core/header.html' %}
 
 <div class="container query">
         <div class="text">
             <h3>{{ text }}</h3>
         </div>
         <div class="sql">
-            <form action="/query1" method="POST" autocomplete="off">
+            <form action="/1/" method="POST" autocomplete="off">
+                {% csrf_token %}
                 <div class="group">
                     <p>
                         Car.objects.all() <br>
                     </p>
                     <p>
-                        .filter(car_plate__startswith='<input type="text" name="plate" value="AN%">') <br>
+                        .filter(car_plate__startswith='<input type="text" name="plate" value="{{ plate }}">') <br>
                     </p>
                     <p>
-                        .filter(color='<input type="text" name="color" value="red">')
+                        .filter(color='<input type="text" name="color" value="{{ color }}">')
                     </p>
                 </div>
-
                 <div class="form-group">
                     <button id="apply">Apply</button>
                 </div>

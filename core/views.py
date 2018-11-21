@@ -1,11 +1,5 @@
 # coding=utf-8
 from django.shortcuts import render
-from .tables import CarTable
-from .form import query_1
-from .tables import ChargeTable
-# Create your views here.
-
-from django.http import HttpResponse, HttpResponseRedirect
 
 
 def index(request):
@@ -18,26 +12,36 @@ def query1(request):
            "She was using cars several times this day, " \
            "but she believes the right car was red and its plate starts with “AN”. " \
            "Find all possible cars that match the description."
-    querytext = "   Car.objects.all()\n " + "   .filter(car_plate__startswith='AN')\n" + "  .filter(color='red')"
-    context = {"text": text, "querytext": querytext, "result": CarTable(query1())}
-
     if request.method == 'GET':
+        plate = "AN"
+        color = "red"
+        result = query1(plate, color)
+        context = {"text": text, "result": result, "plate": plate, "color": color}
         return render(request, 'core/query1.html', context)
 
-    # if request.method == 'POST':
-    #     form = query_1(request.POST)
-    #     if form.is_valid():
-    #         textForm = form.cleaned_data['plate']
-    #         print (textForm)
-    #         return render(request, 'core/query1.html', context, {"textForm": textForm})
+    if request.method == 'POST':
+        plate = request.POST['plate']
+        color = request.POST['color']
+        result = query1(plate, color)
+        context = {"text": text, "result": result, "plate": plate, "color": color}
+        return render(request, 'core/query1.html', context)
 
 
 def query2(request):
     from .queries import query2
     text = "Company management wants to get a statistics on the efficiency of charging stations utilization. " \
            "Given a date, compute how many sockets were occupied each hour."
-    context = {'text': text, "query": query2(date="1542574800000")}
-    return render(request, 'core/query.html', context)
+    if request.method == 'GET':
+        date = 1542574800000
+        result = query2(date)
+        context = {"text": text, "result": result, "date": date}
+        return render(request, 'core/query2.html', context)
+
+    if request.method == 'POST':
+        date = request.POST['date']
+        result = query2(date)
+        context = {"text": text, "result": result, "date": date}
+        return render(request, 'core/query2.html', context)
 
 
 def query3(request):
@@ -46,7 +50,7 @@ def query3(request):
            "(% to the total amount of taxis) during the morning (7AM - 10 AM), " \
            "afternoon (12AM - 2PM) and evening (5PM - 7PM) time."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query4(request):
@@ -55,7 +59,7 @@ def query4(request):
            "(he deleted notification from his phone and he is too lazy to ask the bank), " \
            "so you need to check all his payments for the last month to be be sure that nothing was doubled."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query5(request):
@@ -63,7 +67,7 @@ def query5(request):
         "- Average distance a car has to travel per day to customer’s order location - Average trip duration"\
         " Given a date as an input, compute the statistics above."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query6(request):
@@ -72,7 +76,7 @@ def query6(request):
            "Your task is to compute top-3 most popular pick-up locations and travel destination for each time of day: " \
            "morning (7am-10am), afternoon (12am-2pm) and evening (5pm-7pm)."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query7(request):
@@ -81,7 +85,7 @@ def query7(request):
            "The management decided to stop using 10% of all self-driving cars, " \
            "which take least amount of orders for the last 3 months."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query8(request):
@@ -91,7 +95,7 @@ def query8(request):
            "Now you as DB developer need to provide this data. " \
            "You’ve decided to collect the data for each day within one month and then sum them up."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query9(request):
@@ -100,13 +104,13 @@ def query9(request):
            "Help them decide which parts are used the most every week " \
            "by every workshop and compute the necessary amount of parts to order."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
 def query10(request):
     text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
            "Find out which car type has had the highest average (per day) cost of repairs and charging (combined)."
     context = {'text': text}
-    return render(request, 'core/query.html', context)
+    return render(request, 'core/header.html', context)
 
 
