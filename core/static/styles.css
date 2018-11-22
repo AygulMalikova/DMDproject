@@ -140,7 +140,7 @@ input {
     width: 150px;
 }
 input.short{
-    width: 25px !important;
+    width: 30px !important;
 }
 
 input.middle{

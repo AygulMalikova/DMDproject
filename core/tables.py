@@ -6,9 +6,8 @@ class Table1(tables.Table):
     car_id = tables.Column(verbose_name='car_id')
     model = tables.Column(verbose_name='model')
     amount_of_places = tables.Column(verbose_name='amount_of_places')
-    car_plate = tables.Column(verbose_name='car_plate')
     color = tables.Column(verbose_name='color')
-    # park = tables.Column(accessor='park.vid', verbose_name='park_id')
+    car_plate = tables.Column(verbose_name='car_plate')
     engineer = tables.Column(accessor='engineer.info.username', verbose_name='engineer_username')
     park = tables.Column(accessor='park.vid', verbose_name='park_id')
 
@@ -53,20 +52,37 @@ class Table6(tables.Table):
 
 
 class Table7(tables.Table):
+    car_id = tables.Column(verbose_name='car_id')
+    model = tables.Column(verbose_name='model')
+    amount_of_places = tables.Column(verbose_name='amount_of_places')
+    color = tables.Column(verbose_name='color')
+    car_plate = tables.Column(verbose_name='car_plate')
+    engineer = tables.Column(accessor='engineer.info.username', verbose_name='engineer_username')
+    park = tables.Column(accessor='park.vid', verbose_name='park_id')
+
     class Meta:
+        model = Car
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table8(tables.Table):
+    sum = tables.Column(verbose_name='sum')
+
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table9(tables.Table):
+    workshop = tables.Column(verbose_name='workshop')
+    amount = tables.Column(verbose_name='amount')
+
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table10(tables.Table):
+    car_model = tables.Column(verbose_name='model')
+    cost = tables.Column(verbose_name='cost')
+
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'

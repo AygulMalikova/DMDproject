@@ -1,6 +1,6 @@
 import datetime
 
-from .tables import Table1, Table2, Table3, Table4, Table5, Table9, Table10
+from .tables import Table1, Table2, Table3, Table4, Table5, Table6, Table7, Table8, Table9, Table10
 from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, \
     Operator, Customer, Charge, Order, Payment, ProvidedPart
 from django.contrib.gis.geoip2 import GeoIP2
@@ -53,7 +53,6 @@ def query5(date):
         duration += e.time_end-e.time_begin
     n = orders.count() + 1
     return Table5([distance/n, duration/n])
-    # return Table5([distance/n, duration/n])
 
 
 def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and top3 at the evening
@@ -124,33 +123,25 @@ def takeFirst(elem):
     return elem[0]
 
 
-def query7():
-    text = "Despite the wise management, the company is going through hard times " \
-           "and can’t afford anymore to maintain the current amount of self-driving cars. " \
-           "The management decided to stop using 10% of all self-driving cars, " \
-           "which take least amount of orders for the last 3 months."
-    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=90))
+def query7(perc, lastdays):
+    percent = perc
+    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=lastdays))
     n = Car.objects.all().count()
     cars = []
     for e in orders:
         current = orders.filter(car=e.car)
         cars.append((current.count, e.car))
     cars.sort(key=takeFirst)
-    ans=[]
-    for i in range(0, n):
+    ans = []
+    for i in range(0, int(n*(percent/100))):
         ans.append(cars[i][1])
-    return ans
+    return Table7(ans)
 
 
-def query8():#returns pair(customer, amount)
-    text = "The company management decided to participate in the research on " \
-           "“does customer location of residence depend on " \
-           "how many charging station the self-driving cars was using the same day”. " \
-           "Now you as DB developer need to provide this data. " \
-           "You’ve decided to collect the data for each day within one month and then sum them up."
+def query8(days):#returns pair(customer, amount)
     customers = Customer.objects.all()
-    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=30))
-    charges = Charge.objects.all().filter(time__gte=datetime.date.today() - datetime.timedelta(days=30))
+    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=days))
+    charges = Charge.objects.all().filter(time__gte=datetime.date.today() - datetime.timedelta(days=days))
     ans = []
     for e in customers:
         current = orders.filter(Customer = e)
@@ -158,40 +149,36 @@ def query8():#returns pair(customer, amount)
         for c in current:
             amount += charges.filter(car=c.car).filter(time__day=c.time_begin.day).count()
         ans.append((e, amount))
-    return ans
+    return Table8(ans)
 
 
-def query9():#returns list of pairs(workshop, amount)
-    text = "The company management decided to optimize repair costs " \
-           "by buying parts in bulks from providers for every workshop. " \
-           "Help them decide which parts are used the most every week " \
-           "by every workshop and compute the necessary amount of parts to order."
-    proivded_parts = ProvidedPart.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=42))
+def query9(days):#returns list of pairs(workshop, amount)
+    provided_parts = ProvidedPart.objects.all().filter(time_of_providing=datetime.date.today() - datetime.timedelta(days=days))
     workshops = Workshop.objects.all()
-    ans = []
+    ws = []
+    amount = []
     for w in workshops:
-        ans.append(w, proivded_parts.filter(workshop=w).count())
+        ws.append(w)
+        amount.append(provided_parts.filter(workshop=w).count())
+    return Table9([ws, amount])
 
-    return Table9(ans)
 
-
-def query10():#returs car
-    text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
-           "Find out which car type has had the highest average (per day) cost of repairs and charging (combined)."
-    proivded_parts = ProvidedPart.objects.all()
+def query10():#returs car model
+    provided_parts = ProvidedPart.objects.all()
     charges = Charge.objects.all()
     cars = Car.objects.all()
-    mx = 0
+    max = 0
     best = cars[0]
     for c in cars:
-        used_parts = proivded_parts.filter(car_part__car=c)
-        cur = 0
+        used_parts = provided_parts.filter(car_part__car__model=c.model)
+        current = 0
         for e in used_parts:
-            cur += e.car_part.price
+            current += e.car_part.price
         used_charges = charges.filter(car=c)
         for e in used_charges:
-            cur+=e.charging_station.price
-        if mx<cur:
-            mx = cur
+            current += e.charging_station.price
+        if max < current:
+            max = current
             best = c
-    return Table10(best)
+    return Table10([best.model])
+

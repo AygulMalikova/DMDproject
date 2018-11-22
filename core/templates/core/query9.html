@@ -1,0 +1,47 @@
+{% load render_table from django_tables2 %}
+{% include 'core/header.html' %}
+
+<div class="container query">
+        <div class="text">
+            <h3>{{ text }}</h3>
+        </div>
+        <div class="sql">
+            <form action="/9/" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="group">
+                    <p>
+                        provided_parts = ProvidedPart.objects.all() <br>
+                        .filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=
+                        <input class="short" type="number" name="days" value="{{ days }}">)) <br>
+                        workshops = Workshop.objects.all() <br>
+                        ws = []<br>
+                        amount = []<br>
+                        for w in workshops:<br>
+                        &#8195;&#8195;ws.append(w)
+                        &#8195;&#8195;amount.append(provided_parts.filter(workshop=w).count()) <br>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button id="apply">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            {% render_table result %}
+        </div>
+        <table>
+            <thead class="thead">
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            <tr class="tr">
+                <td>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</body>
+</html>

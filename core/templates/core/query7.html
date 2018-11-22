@@ -1,0 +1,51 @@
+{% load render_table from django_tables2 %}
+{% include 'core/header.html' %}
+
+<div class="container query">
+        <div class="text">
+            <h3>{{ text }}</h3>
+        </div>
+        <div class="sql">
+            <form action="/7/" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="group">
+                    <p>
+                        percent = <input class="short" type="number" min="0" max="100" name="percent" value="{{ percent }}"> <br>
+                        orders = Order.objects.all()<br>
+                        .filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=
+                        <input class="short" type="number" name="days" value="{{ days }}">))<br>
+                        n = Car.objects.all().count()<br>
+                        cars = []<br>
+                        for e in orders:<br>
+                         &#8195;&#8195;current = orders.filter(car=e.car)<br>
+                         &#8195;&#8195;cars.append((current.count, e.car))<br>
+                        cars.sort(key=takeFirst)<br>
+                        ans = []<br>
+                        for i in range(0, int(n*(percent/100))):<br>
+                        &#8195;&#8195;ans.append(cars[i][1])
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button id="apply">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            {% render_table result %}
+        </div>
+        <table>
+            <thead class="thead">
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            <tr class="tr">
+                <td>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</body>
+</html>

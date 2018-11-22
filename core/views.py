@@ -153,8 +153,19 @@ def query7(request):
            "and can’t afford anymore to maintain the current amount of self-driving cars. " \
            "The management decided to stop using 10% of all self-driving cars, " \
            "which take least amount of orders for the last 3 months."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        percent = 10
+        lastdays = 90
+        result = query7(percent, lastdays)
+        context = {"text": text, "result": result, "percent": percent, "days": lastdays}
+        return render(request, 'core/query7.html', context)
+
+    if request.method == 'POST':
+        percent = int(request.POST['percent'])
+        lastdays = int(request.POST['days'])
+        result = query7(percent, lastdays)
+        context = {"text": text, "result": result, "percent": percent, "days": lastdays}
+        return render(request, 'core/query7.html', context)
 
 
 def query8(request):
@@ -164,8 +175,17 @@ def query8(request):
            "how many charging station the self-driving cars was using the same day”. " \
            "Now you as DB developer need to provide this data. " \
            "You’ve decided to collect the data for each day within one month and then sum them up."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        lastdays = 30
+        result = query8(lastdays)
+        context = {"text": text, "result": result, "days": lastdays}
+        return render(request, 'core/query8.html', context)
+
+    if request.method == 'POST':
+        lastdays = int(request.POST['days'])
+        result = query8(lastdays)
+        context = {"text": text, "result": result, "days": lastdays}
+        return render(request, 'core/query8.html', context)
 
 
 def query9(request):
@@ -174,17 +194,25 @@ def query9(request):
            "by buying parts in bulks from providers for every workshop. " \
            "Help them decide which parts are used the most every week " \
            "by every workshop and compute the necessary amount of parts to order."
-    result = query9()
-    context = {'text': text, "result": result}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        lastdays = 42
+        result = query9(lastdays)
+        context = {"text": text, "result": result, "days": lastdays}
+        return render(request, 'core/query9.html', context)
+
+    if request.method == 'POST':
+        lastdays = int(request.POST['days'])
+        result = query9(lastdays)
+        context = {"text": text, "result": result, "days": lastdays}
+        return render(request, 'core/query9.html', context)
 
 
 def query10(request):
     from .queries import query10
     text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
            "Find out which car type has had the highest average (per day) cost of repairs and charging (combined)."
+    attribute = "model"
     result = query10()
-    context = {'text': text, "result": result}
-    return render(request, 'core/header.html', context)
-
+    context = {'text': text, "result": result, "attribute": attribute}
+    return render(request, 'core/query10.html', context)
 
