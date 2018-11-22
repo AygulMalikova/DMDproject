@@ -40,16 +40,6 @@ class ProvidingManager(models.Model):
     def __unicode__(self):
         return u"%s" % self.companyid
 
-class CarParts(models.Model):
-    type = models.TextField(default="")
-    car_model = models.TextField(default="")
-    count = models.IntegerField(default=0)
-    color = models.TextField(default="white")
-    engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
-    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
-
-    def __unicode__(self):
-        return u"%s" % self.type
 
 class ChargingStation(models.Model):
     uid = models.IntegerField(default=0, primary_key=True)
@@ -81,6 +71,17 @@ class Car(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.car_id
+
+class CarParts(models.Model):
+    type = models.TextField(default="")
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
+    color = models.TextField(default="white")
+    engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return u"%s" % self.type
 
 class Operator(models.Model):
     parks = models.ManyToManyField(VehiclePark)
@@ -124,4 +125,8 @@ class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     time_of_payment = models.DateTimeField(default=datetime.datetime.now())
 
-
+class ProvidedPart(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    car_part = models.ForeignKey(CarParts, on_delete=models.CASCADE)
+    time_of_providing = models.DateTimeField(default=datetime.datetime.now())
+    price = models.IntegerField(default=0)

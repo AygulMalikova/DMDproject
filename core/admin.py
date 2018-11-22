@@ -4,7 +4,7 @@ from core import models
 admin.site.register(models.Employee)
 admin.site.register(models.VehicleEngineer)
 admin.site.register(models.Workshop)
-admin.site.register(models.ProvidngManager)
+admin.site.register(models.ProvidingManager)
 admin.site.register(models.CarParts)
 admin.site.register(models.ChargingStation)
 admin.site.register(models.VehiclePark)
