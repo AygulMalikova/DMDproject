@@ -1,5 +1,6 @@
 import django_tables2 as tables
-from .models import Car, Charge
+from .models import Car, Charge, Order
+
 
 class CarTable(tables.Table):
     car_id = tables.Column(verbose_name='car_id')
@@ -8,11 +9,10 @@ class CarTable(tables.Table):
     car_plate = tables.Column(verbose_name='car_plate')
     color = tables.Column(verbose_name='color')
     # park = tables.Column(accessor='park.vid', verbose_name='park_id')
-    engineer = tables.Column(accessor='engineer.info.username', verbose_name='engineer_id')
+    engineer = tables.Column(accessor='engineer.info.username', verbose_name='engineer_username')
     park = tables.Column(accessor='park.vid', verbose_name='park_id')
 
     # charging_station = tables.Column(accessor='charging_station.uid', verbose_name='Charging statiom')
-
     class Meta:
         model = Car
         template_name = 'django_tables2/bootstrap-responsive.html'
@@ -21,4 +21,10 @@ class CarTable(tables.Table):
 class ChargeTable(tables.Table):
     class Meta:
         model = Charge
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class OrderTable(tables.Table):
+    class Meta:
+        model = Order
         template_name = 'django_tables2/bootstrap-responsive.html'

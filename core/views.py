@@ -45,12 +45,46 @@ def query2(request):
 
 
 def query3(request):
+    from .queries import query3
     text = "Company management considers using price increasing coefficients. " \
            "They need to gather statistics for one week on how many cars are busy " \
            "(% to the total amount of taxis) during the morning (7AM - 10 AM), " \
            "afternoon (12AM - 2PM) and evening (5PM - 7PM) time."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        morning_from = 7
+        morning_to = 10
+        afternoon_from = 12
+        afternoon_to = 14
+        evening_from = 17
+        evening_to = 19
+        result = query3(morning_from, morning_to, afternoon_from, afternoon_to, evening_from, evening_to)
+        context = {"text": text, "result": result,
+                   "morning_from": morning_from,
+                   "morning_to": morning_to,
+                   "afternoon_from": afternoon_from,
+                   "afternoon_to": afternoon_to,
+                   "evening_from": evening_from,
+                   "evening_to": evening_to
+                   }
+        return render(request, 'core/query3.html', context)
+
+    if request.method == 'POST':
+        morning_from = request.POST['morning_from']
+        morning_to = request.POST['morning_to']
+        afternoon_from = request.POST['afternoon_from']
+        afternoon_to = request.POST['afternoon_to']
+        evening_from = request.POST['evening_from']
+        evening_to = request.POST['evening_to']
+        result = query3(morning_from, morning_to, afternoon_from, afternoon_to, evening_from, evening_to)
+        context = {"text": text, "result": result,
+                   "morning_from": morning_from,
+                   "morning_to": morning_to,
+                   "afternoon_from": afternoon_from,
+                   "afternoon_to": afternoon_to,
+                   "evening_from": evening_from,
+                   "evening_to": evening_to
+                   }
+        return render(request, 'core/query3.html', context)
 
 
 def query4(request):

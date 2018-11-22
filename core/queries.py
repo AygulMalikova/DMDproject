@@ -1,36 +1,34 @@
 import datetime
-from django.shortcuts import render
 
-from .tables import CarTable
-from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, Operator, Customer, Charge, Order, Payment, ProvidedPart
+from .tables import CarTable, ChargeTable, OrderTable
+from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, Operator, Customer, Charge, Order, Payment
 from django.contrib.gis.geoip2 import GeoIP2
+
 
 def query1():
     cars = Car.objects.all().filter(car_plate__startswith='AN').filter(color='red')
     return CarTable(cars)
 
-def query2(date:datetime):
-    charges = Charge.objects.all().filter(time__day = date.day)
+
+def query2(date):
+    charges = Charge.objects.all().filter(time__day=date)
     amounts = []
     for i in range(24):
         amounts.append(charges.filter(time__hour=i))
-    return amounts
+    return ChargeTable(amounts)
 
-def query3():
-    text = "Company management considers using price increasing coefficients. " \
-           "They need to gather statistics for one week on how many cars are busy " \
-           "(% to the total amount of taxis) during the morning (7AM - 10 AM), " \
-           "afternoon (12AM - 2PM) and evening (5PM - 7PM) time."
-    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days = 7))
-    orders1 = orders.filter(time_begin__hour=[7,8,9])
-    orders2 = orders.filter(time_begin__hour=[12,13])
-    orders3 = orders.filter(time_begin__hour=[19,20,21])
+
+def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo):
+    orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=7))
+    orders1 = orders.filter(time_begin__hour=[7, 8, 9])
+    orders2 = orders.filter(time_begin__hour=[12, 13])
+    orders3 = orders.filter(time_begin__hour=[19, 20, 21])
     amount_cars = Car.objects.all().count()
     ans = []
     ans.append(orders1.count()/amount_cars)
     ans.append(orders2.count()/amount_cars)
     ans.append(orders3.count()/amount_cars)
-    return ans;
+    return OrderTable(ans)
 
 def query4(customer):
     text = "A customer claims that he was charged twice for the trip, " \
