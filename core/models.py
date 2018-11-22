@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+import datetime
 
 
 class Employee(models.Model):
@@ -20,7 +20,7 @@ class VehicleEngineer(models.Model):
 
 
 class Workshop(models.Model):
-    workshopid = models.CharField(max_length=10, primary_key=True)
+    workshopid = models.IntegerField(default=0, primary_key=True)
     country = models.TextField(default="")
     zipcode = models.CharField(max_length=30)
     city = models.TextField(default="")
@@ -28,8 +28,8 @@ class Workshop(models.Model):
     def __unicode__(self):
         return u"%s" % self.workshopid
 
-class ProvidngManager(models.Model):
-    companyid = models.CharField(max_length=10, primary_key=True)
+class ProvidingManager(models.Model):
+    company_id = models.IntegerField(default=0, primary_key=True)
     country = models.TextField(default="")
     zipcode = models.CharField(max_length=30)
     city = models.TextField(default="")
@@ -52,7 +52,7 @@ class CarParts(models.Model):
         return u"%s" % self.type
 
 class ChargingStation(models.Model):
-    uid = models.CharField(max_length=10, primary_key=True)
+    uid = models.IntegerField(default=0, primary_key=True)
     price = models.IntegerField(default=0)
     amount_of_available_sockets = models.IntegerField(default=0)
     gps_location = models.TextField(default="")
@@ -63,7 +63,7 @@ class ChargingStation(models.Model):
         return u"%s" % self.uid
 
 class VehiclePark(models.Model):
-    vid = models.CharField(max_length=10, primary_key=True)
+    vid = models.IntegerField(default=0, primary_key=True)
     location = models.TextField(default="")
     amount_of_cars = models.IntegerField(default=0)
 
@@ -71,7 +71,7 @@ class VehiclePark(models.Model):
         return u"%s" % self.vid
 
 class Car(models.Model):
-    car_id = models.CharField(max_length=10, primary_key=True)
+    car_id = models.IntegerField(default=0, primary_key=True)
     model = models.TextField(default="")
     amount_of_places = models.IntegerField(default=4)
     color = models.TextField(default="white")
@@ -81,13 +81,6 @@ class Car(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.car_id
-
-class Charge(models.Model):
-    charge_id = models.CharField(max_length=10, primary_key=True)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
-    time = models.DateTimeField(default=datetime.now, blank=True)
-
 
 class Operator(models.Model):
     parks = models.ManyToManyField(VehiclePark)
@@ -112,6 +105,23 @@ class Customer(models.Model):
     def __unicode__(self):
         return u"%s" % self.username
 
+class Charge(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
+    time = models.DateTimeField(default=datetime.datetime.now())
 
+
+class Order(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    time_begin = models.DateTimeField(default=datetime.datetime.now())
+    time_end = models.DateTimeField(default=datetime.datetime.now())
+    location_begin = models.TextField(default="")
+    location_end = models.TextField(default="")
+    location_car = models.TextField(default="")
+
+class Payment(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    time_of_payment = models.DateTimeField(default=datetime.datetime.now())
 
 
