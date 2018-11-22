@@ -13,7 +13,7 @@
                         Charge.objects.all() <br>
                         .filter(time__day='(<input class="middle" type="number" max="2018" name="year" value="{{ year }}">-
                         <input class="short" type="number" min="1" max="12" name="month" value="{{ month }}">-
-                        <input class="short" type="number" min="1" max="31" name="day" value="{{ day }}">') <br>
+                        <input class="short" type="number" min="1" max="31" name="day" value="{{ day }}">').day <br>
                         amounts = [] <br>
                         for i in range(24): <br>
                         amounts.append(charges.filter(time__hour=i))

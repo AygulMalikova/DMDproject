@@ -43,9 +43,9 @@ def query2(request):
         return render(request, 'core/query2.html', context)
 
     if request.method == 'POST':
-        dateyear = request.POST['year']
-        datemonth = request.POST['month']
-        dateday = request.POST['day']
+        dateyear = int(request.POST['year'])
+        datemonth = int(request.POST['month'])
+        dateday = int(request.POST['day'])
         date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
         context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}
@@ -101,9 +101,9 @@ def query4(request):
            "(he deleted notification from his phone and he is too lazy to ask the bank), " \
            "so you need to check all his payments for the last month to be be sure that nothing was doubled."
     if request.method == 'GET':
-        d = date(2016, 2, 26)
-        result = query4(d)
-        context = {"text": text, "result": result, "date": d}
+        username = "Mark"
+        result = query4(username)
+        context = {"text": text, "result": result, "username": username}
         return render(request, 'core/query2.html', context)
 
     # if request.method == 'POST':
