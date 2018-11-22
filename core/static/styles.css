@@ -142,6 +142,10 @@ input {
 input.short{
     width: 25px !important;
 }
+
+input.middle{
+    width: 50px !important;
+}
 .form-inline {
   display: flex;
   flex-flow: row wrap;

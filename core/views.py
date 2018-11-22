@@ -33,9 +33,13 @@ def query2(request):
     text = "Company management wants to get a statistics on the efficiency of charging stations utilization. " \
            "Given a date, compute how many sockets were occupied each hour."
     if request.method == 'GET':
-        date = datetime.date(2018,11,22)
+        dateyear = 2018
+        print
+        datemonth = 11
+        dateday = 21
+        date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
-        context = {"text": text, "result": result, "date": date}
+        context = {"text": text, "result": result,  "year": dateyear, "month": datemonth, "day": dateday}
         return render(request, 'core/query2.html', context)
 
     if request.method == 'POST':
@@ -44,7 +48,7 @@ def query2(request):
         dateday = request.POST['day']
         date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
-        context = {"text": text, "result": result, "date": date}
+        context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}
         return render(request, 'core/query2.html', context)
 
 
@@ -157,18 +161,23 @@ def query8(request):
 
 
 def query9(request):
+    from .queries import query9
     text = "The company management decided to optimize repair costs " \
            "by buying parts in bulks from providers for every workshop. " \
            "Help them decide which parts are used the most every week " \
            "by every workshop and compute the necessary amount of parts to order."
-    context = {'text': text}
+    result = query9()
+    context = {'text': text, "result": result}
+
     return render(request, 'core/header.html', context)
 
 
 def query10(request):
+    from .queries import query10
     text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
            "Find out which car type has had the highest average (per day) cost of repairs and charging (combined)."
-    context = {'text': text}
+    result = query9()
+    context = {'text': text, "result": result}
     return render(request, 'core/header.html', context)
 
 

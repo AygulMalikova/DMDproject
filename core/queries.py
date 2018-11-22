@@ -1,6 +1,6 @@
 import datetime
 
-from .tables import Table1, Table2, Table3, Table5
+from .tables import Table1, Table2, Table3, Table5, Table9, Table10
 from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, \
     Operator, Customer, Charge, Order, Payment, ProvidedPart
 from django.contrib.gis.geoip2 import GeoIP2
@@ -166,6 +166,7 @@ def query8():#returns pair(customer, amount)
         ans.append((e, amount))
     return ans
 
+
 def query9():#returns list of pairs(workshop, amount)
     text = "The company management decided to optimize repair costs " \
            "by buying parts in bulks from providers for every workshop. " \
@@ -177,7 +178,8 @@ def query9():#returns list of pairs(workshop, amount)
     for w in workshops:
         ans.append(w, proivded_parts.filter(workshop=w).count())
 
-    return ans
+    return Table9(ans)
+
 
 def query10():#returs car
     text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
@@ -198,4 +200,4 @@ def query10():#returs car
         if mx<cur:
             mx = cur
             best = c
-    return best
+    return Table10(best)

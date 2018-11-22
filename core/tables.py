@@ -44,3 +44,13 @@ class Table5(tables.Table):
 
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table9(tables.Table):
+    class Meta:
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table10(tables.Table):
+    class Meta:
+        template_name = 'django_tables2/bootstrap-responsive.html'
