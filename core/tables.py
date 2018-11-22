@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from .models import Car, Charge, Order
+from .models import Car, Charge, Order, Payment
 
 
 class Table1(tables.Table):
@@ -20,15 +20,10 @@ class Table1(tables.Table):
 
 class Table2(tables.Table):
     amount = tables.Column(verbose_name='amount')
+
     class Meta:
         model = Charge
         template_name = 'django_tables2/bootstrap-responsive.html'
-
-#
-# class OrderTable(tables.Table):
-#     class Meta:
-#         model = Order
-#         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table3(tables.Table):
@@ -38,10 +33,31 @@ class Table3(tables.Table):
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
-class Table5(tables.Table):
-    avg_distance = tables.Column(verbose_name="avg_distance")
-    avg_duration = tables.Column(verbose_name="avg_duration")
+class Table4(tables.Table):
+    class Meta:
+        model = Payment
+        template_name = 'django_tables2/bootstrap-responsive.html'
 
+
+class Table5(tables.Table):
+    avg_distance = tables.Column(verbose_name="Average distance")
+    avg_duration = tables.Column(verbose_name="Average duration")
+
+    class Meta:
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table6(tables.Table):
+    class Meta:
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table7(tables.Table):
+    class Meta:
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table8(tables.Table):
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
 

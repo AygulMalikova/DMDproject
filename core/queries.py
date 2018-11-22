@@ -1,6 +1,6 @@
 import datetime
 
-from .tables import Table1, Table2, Table3, Table5, Table9, Table10
+from .tables import Table1, Table2, Table3, Table4, Table5, Table9, Table10
 from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, \
     Operator, Customer, Charge, Order, Payment, ProvidedPart
 from django.contrib.gis.geoip2 import GeoIP2
@@ -39,18 +39,11 @@ def query4(username):
     payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))
     payments.filter(order__customer__username=username)
     payments = payments.order_by('time_of_payment')
-    if len(payments) <= 1:
-        return False
-    last = payments[0]
-    for e in payments[1:-1]:
-        if e.order_id == last.order_id:
-            return True
-        last = e
-    return False
+    return Table4(payments)
 
 
-def query5(d):
-    orders = Order.objects.all().filter(time_begin__day=d)
+def query5(date):
+    orders = Order.objects.all().filter(time_begin__day=date.day)
     distance = 0
     duration = 0
     for e in orders:
@@ -58,8 +51,8 @@ def query5(d):
         second = GeoIP2.geos(e.location_end)
         distance += first.distance(second)
         duration += e.time_end-e.time_begin
-    n = orders.count()
-    return Table3(distance/n)
+    n = orders.count() + 1
+    return Table5([distance/n, duration/n])
     # return Table5([distance/n, duration/n])
 
 
@@ -147,6 +140,7 @@ def query7():
     for i in range(0, n):
         ans.append(cars[i][1])
     return ans
+
 
 def query8():#returns pair(customer, amount)
     text = "The company management decided to participate in the research on " \

@@ -10,17 +10,20 @@
                 {% csrf_token %}
                 <div class="group">
                     <p>
-                        Charge.objects.all() <br>
-                        orders = Order.objects.all().filter(time_begin__day=<input type="text" name="date" value="{{ d }}">.day)
-                        distance = 0
-                        duration = 0
-                        for e in orders:
-                            first = GeoIP2.geos(e.location_car)
-                            second = GeoIP2.geos(e.location_end)
-                            distance += first.distance(second)
-                            duration += e.time_end-e.time_begin
-                        n = orders.count()
-                        return [distance/n, duration/n]
+                        orders = Order.objects.all() <br>
+                        .filter(time_begin__day='(<input class="middle" type="number" max="2018" name="year" value="{{ year }}">-
+                        <input class="short" type="number" min="1" max="12" name="month" value="{{ month }}">-
+                        <input class="short" type="number" min="1" max="31" name="day" value="{{ day }}">').day <br>
+                        distance = 0 <br>
+                        duration = 0 <br>
+                        for e in orders: <br>
+                        &#8195;&#8195;first = GeoIP2.geos(e.location_car) <br>
+                        &#8195;&#8195;second = GeoIP2.geos(e.location_end) <br>
+                        &#8195;&#8195;distance += first.distance(second) <br>
+                        &#8195;&#8195;duration += e.time_end-e.time_begin <br>
+                        n = orders.count() <br>
+                        avg_distance = distance/n <br>
+                        avg_duration = duration/n
                     </p>
                 </div>
                 <div class="form-group">
@@ -29,7 +32,7 @@
             </form>
         </div>
         <div class="container">
-{#            {% render_table result %}#}
+            {% render_table result %}
         </div>
         <table>
             <thead class="thead">

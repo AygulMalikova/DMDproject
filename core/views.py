@@ -34,7 +34,6 @@ def query2(request):
            "Given a date, compute how many sockets were occupied each hour."
     if request.method == 'GET':
         dateyear = 2018
-        print
         datemonth = 11
         dateday = 21
         date = datetime.date(dateyear, datemonth, dateday)
@@ -96,6 +95,7 @@ def query3(request):
 
 
 def query4(request):
+    from .queries import query4
     text = "A customer claims that he was charged twice for the trip, " \
            "but he can’t say exactly what day it happened " \
            "(he deleted notification from his phone and he is too lazy to ask the bank), " \
@@ -104,13 +104,13 @@ def query4(request):
         username = "Mark"
         result = query4(username)
         context = {"text": text, "result": result, "username": username}
-        return render(request, 'core/query2.html', context)
+        return render(request, 'core/query4.html', context)
 
-    # if request.method == 'POST':
-    #     # date = request.POST['date']
-    #     result = query4(date)
-    #     context = {"text": text, "result": result, "date": date}
-    #     return render(request, 'core/query2.html', context)
+    if request.method == 'POST':
+        username = request.POST['username']
+        result = query4(username)
+        context = {"text": text, "result": result, "username": username}
+        return render(request, 'core/query4.html', context)
 
 
 def query5(request):
@@ -119,20 +119,26 @@ def query5(request):
         "- Average distance a car has to travel per day to customer’s order location - Average trip duration"\
         " Given a date as an input, compute the statistics above."
     if request.method == 'GET':
-        d = date(2005, 7, 14)
-        result = query5(d)
-        print (result)
-    # context = {"text": text, "result": result, "date": d}
-        return render(request, 'core/query5.html',)
+        dateyear = 2018
+        datemonth = 11
+        dateday = 21
+        date = datetime.date(dateyear, datemonth, dateday)
+        result = query5(date)
+        context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}
+        return render(request, 'core/query5.html', context)
 
-    # if request.method == 'POST':
-    #     date = request.POST['date']
-    #     result = query5(date)
-    #     context = {"text": text, "result": result, "date": date}
-    #     return render(request, 'core/query5.html', context)
+    if request.method == 'POST':
+        dateyear = int(request.POST['year'])
+        datemonth = int(request.POST['month'])
+        dateday = int(request.POST['day'])
+        date = datetime.date(dateyear, datemonth, dateday)
+        result = query5(date)
+        context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}
+        return render(request, 'core/query5.html', context)
 
 
 def query6(request):
+    from .queries import query6
     text = "In order to accommodate traveling demand, " \
            "the company decided to distribute cars according to demand locations. " \
            "Your task is to compute top-3 most popular pick-up locations and travel destination for each time of day: " \
@@ -142,6 +148,7 @@ def query6(request):
 
 
 def query7(request):
+    from .queries import query7
     text = "Despite the wise management, the company is going through hard times " \
            "and can’t afford anymore to maintain the current amount of self-driving cars. " \
            "The management decided to stop using 10% of all self-driving cars, " \
@@ -151,6 +158,7 @@ def query7(request):
 
 
 def query8(request):
+    from .queries import query8
     text = "The company management decided to participate in the research on " \
            "“does customer location of residence depend on " \
            "how many charging station the self-driving cars was using the same day”. " \
@@ -168,7 +176,6 @@ def query9(request):
            "by every workshop and compute the necessary amount of parts to order."
     result = query9()
     context = {'text': text, "result": result}
-
     return render(request, 'core/header.html', context)
 
 
@@ -176,7 +183,7 @@ def query10(request):
     from .queries import query10
     text = "The company management decided to cut costs by getting rid of the most expensive car to maintain. " \
            "Find out which car type has had the highest average (per day) cost of repairs and charging (combined)."
-    result = query9()
+    result = query10()
     context = {'text': text, "result": result}
     return render(request, 'core/header.html', context)
 
