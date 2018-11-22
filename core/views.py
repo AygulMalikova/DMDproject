@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
-from datetime import date
-
+import datetime
+from django.contrib.gis.geoip2 import GeoIP2
 
 def index(request):
     return render(request, 'core/index.html')
@@ -33,13 +33,16 @@ def query2(request):
     text = "Company management wants to get a statistics on the efficiency of charging stations utilization. " \
            "Given a date, compute how many sockets were occupied each hour."
     if request.method == 'GET':
-        date = 19
+        date = datetime.date(2018,11,22)
         result = query2(date)
         context = {"text": text, "result": result, "date": date}
         return render(request, 'core/query2.html', context)
 
     if request.method == 'POST':
-        date = request.POST['date']
+        dateyear = request.POST['year']
+        datemonth = request.POST['month']
+        dateday = request.POST['day']
+        date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
         context = {"text": text, "result": result, "date": date}
         return render(request, 'core/query2.html', context)
@@ -107,6 +110,7 @@ def query4(request):
 
 
 def query5(request):
+    from .queries import query5
     text = "The department of development has requested the following statistics: " \
         "- Average distance a car has to travel per day to customer’s order location - Average trip duration"\
         " Given a date as an input, compute the statistics above."

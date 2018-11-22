@@ -12,7 +12,7 @@ def query1(plate, color):
 
 
 def query2(date):
-    charges = Charge.objects.all().filter(time__day=date)
+    charges = Charge.objects.all().filter(time__day=date.day)
     amounts = []
     for i in range(24):
         amounts.append(charges.filter(time__hour=i))
@@ -35,9 +35,9 @@ def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
     return Table3(ans)
 
 
-def query4(customer):
+def query4(username):
     payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))
-    payments.filter(order__customer=customer)
+    payments.filter(order__customer__username=username)
     payments = payments.order_by('time_of_payment')
     if len(payments) <= 1:
         return False
