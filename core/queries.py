@@ -1,13 +1,14 @@
 import datetime
 
-from .tables import CarTable, ChargeTable, OrderTable
-from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, Operator, Customer, Charge, Order, Payment
+from .tables import Table1, Table2, Table3, Table5
+from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, \
+    Operator, Customer, Charge, Order, Payment, ProvidedPart
 from django.contrib.gis.geoip2 import GeoIP2
 
 
-def query1():
-    cars = Car.objects.all().filter(car_plate__startswith='AN').filter(color='red')
-    return CarTable(cars)
+def query1(plate, color):
+    cars = Car.objects.all().filter(car_plate__startswith=plate).filter(color=color)
+    return Table1(cars)
 
 
 def query2(date):
@@ -15,27 +16,27 @@ def query2(date):
     amounts = []
     for i in range(24):
         amounts.append(charges.filter(time__hour=i))
-    return ChargeTable(amounts)
+    return Table2(amounts)
 
 
 def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo):
     orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=7))
-    orders1 = orders.filter(time_begin__hour=[7, 8, 9])
-    orders2 = orders.filter(time_begin__hour=[12, 13])
-    orders3 = orders.filter(time_begin__hour=[19, 20, 21])
+    for i in range(morningFrom, morningTo+1):
+        morning = orders.filter(time_begin__hour=i)
+    for i in range(afternoonFrom, aftenoonTo+1):
+        afternoon = orders.filter(time_begin__hour=i)
+    for i in range(eveningFrom, eveningTo+1):
+        evening = orders.filter(time_begin__hour=i)
     amount_cars = Car.objects.all().count()
     ans = []
-    ans.append(orders1.count()/amount_cars)
-    ans.append(orders2.count()/amount_cars)
-    ans.append(orders3.count()/amount_cars)
-    return OrderTable(ans)
+    ans.append(morning.count()/amount_cars)
+    ans.append(afternoon.count()/amount_cars)
+    ans.append(evening.count()/amount_cars)
+    return Table3(ans)
+
 
 def query4(customer):
-    text = "A customer claims that he was charged twice for the trip, " \
-           "but he can’t say exactly what day it happened " \
-           "(he deleted notification from his phone and he is too lazy to ask the bank), " \
-           "so you need to check all his payments for the last month to be be sure that nothing was doubled."
-    payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days = 30))
+    payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))
     payments.filter(order__customer=customer)
     payments = payments.order_by('time_of_payment')
     if len(payments) <= 1:
@@ -47,20 +48,20 @@ def query4(customer):
         last = e
     return False
 
-def query5(date):
-    text = "The department of development has requested the following statistics: " \
-           "- Average distance a car has to travel per day to customer’s order location - Average trip duration" \
-           " Given a date as an input, compute the statistics above."
-    orders = Order.objects.all().filter(time_begin__day = date.day)
+
+def query5(d):
+    orders = Order.objects.all().filter(time_begin__day=d)
     distance = 0
     duration = 0
     for e in orders:
         first = GeoIP2.geos(e.location_car)
         second = GeoIP2.geos(e.location_end)
-        distance+=first.distance(second)
-        duration+=e.time_end-e.time_begin
+        distance += first.distance(second)
+        duration += e.time_end-e.time_begin
     n = orders.count()
-    return [distance/n, duration/n]
+    return Table3(distance/n)
+    # return Table5([distance/n, duration/n])
+
 
 def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and top3 at the evening
     text = "In order to accommodate traveling demand, " \
@@ -125,8 +126,11 @@ def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and
     ans.append(top3)
     return ans
 
+
 def takeFirst(elem):
     return elem[0]
+
+
 def query7():
     text = "Despite the wise management, the company is going through hard times " \
            "and can’t afford anymore to maintain the current amount of self-driving cars. " \

@@ -74,7 +74,7 @@ class Car(models.Model):
 
 class CarParts(models.Model):
     type = models.TextField(default="")
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, default=None, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
     color = models.TextField(default="white")
     engineer = models.ForeignKey(VehicleEngineer, on_delete=models.CASCADE)
@@ -107,6 +107,7 @@ class Customer(models.Model):
         return u"%s" % self.username
 
 class Charge(models.Model):
+    charge_id = models.IntegerField(default=0, primary_key=True)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.datetime.now())

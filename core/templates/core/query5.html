@@ -6,15 +6,21 @@
             <h3>{{ text }}</h3>
         </div>
         <div class="sql">
-            <form action="/2/" method="POST" autocomplete="off">
+            <form action="/5/" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <div class="group">
                     <p>
                         Charge.objects.all() <br>
-                        .filter(time__day='<input type="number" max="31" min="1" name="date" value="{{ date }}">') <br>
-                        amounts = [] <br>
-                        for i in range(24): <br>
-                        amounts.append(charges.filter(time__hour=i))
+                        orders = Order.objects.all().filter(time_begin__day=<input type="text" name="date" value="{{ d }}">.day)
+                        distance = 0
+                        duration = 0
+                        for e in orders:
+                            first = GeoIP2.geos(e.location_car)
+                            second = GeoIP2.geos(e.location_end)
+                            distance += first.distance(second)
+                            duration += e.time_end-e.time_begin
+                        n = orders.count()
+                        return [distance/n, duration/n]
                     </p>
                 </div>
                 <div class="form-group">
@@ -23,7 +29,7 @@
             </form>
         </div>
         <div class="container">
-            {% render_table result %}
+{#            {% render_table result %}#}
         </div>
         <table>
             <thead class="thead">

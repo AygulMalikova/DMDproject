@@ -2,7 +2,7 @@ import django_tables2 as tables
 from .models import Car, Charge, Order
 
 
-class CarTable(tables.Table):
+class Table1(tables.Table):
     car_id = tables.Column(verbose_name='car_id')
     model = tables.Column(verbose_name='model')
     amount_of_places = tables.Column(verbose_name='amount_of_places')
@@ -18,13 +18,29 @@ class CarTable(tables.Table):
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
-class ChargeTable(tables.Table):
+class Table2(tables.Table):
+    amount = tables.Column(verbose_name='amount')
     class Meta:
         model = Charge
         template_name = 'django_tables2/bootstrap-responsive.html'
 
+#
+# class OrderTable(tables.Table):
+#     class Meta:
+#         model = Order
+#         template_name = 'django_tables2/bootstrap-responsive.html'
 
-class OrderTable(tables.Table):
+
+class Table3(tables.Table):
+    count = tables.Column(verbose_name='%')
+
     class Meta:
-        model = Order
+        template_name = 'django_tables2/bootstrap-responsive.html'
+
+
+class Table5(tables.Table):
+    avg_distance = tables.Column(verbose_name="avg_distance")
+    avg_duration = tables.Column(verbose_name="avg_duration")
+
+    class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'

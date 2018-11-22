@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.shortcuts import render
+from datetime import date
 
 
 def index(request):
@@ -32,7 +33,7 @@ def query2(request):
     text = "Company management wants to get a statistics on the efficiency of charging stations utilization. " \
            "Given a date, compute how many sockets were occupied each hour."
     if request.method == 'GET':
-        date = 1542574800000
+        date = 19
         result = query2(date)
         context = {"text": text, "result": result, "date": date}
         return render(request, 'core/query2.html', context)
@@ -92,16 +93,35 @@ def query4(request):
            "but he can’t say exactly what day it happened " \
            "(he deleted notification from his phone and he is too lazy to ask the bank), " \
            "so you need to check all his payments for the last month to be be sure that nothing was doubled."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        d = date(2016, 2, 26)
+        result = query4(d)
+        context = {"text": text, "result": result, "date": d}
+        return render(request, 'core/query2.html', context)
+
+    # if request.method == 'POST':
+    #     # date = request.POST['date']
+    #     result = query4(date)
+    #     context = {"text": text, "result": result, "date": date}
+    #     return render(request, 'core/query2.html', context)
 
 
 def query5(request):
     text = "The department of development has requested the following statistics: " \
         "- Average distance a car has to travel per day to customer’s order location - Average trip duration"\
         " Given a date as an input, compute the statistics above."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        d = date(2005, 7, 14)
+        result = query5(d)
+        print (result)
+    # context = {"text": text, "result": result, "date": d}
+        return render(request, 'core/query5.html',)
+
+    # if request.method == 'POST':
+    #     date = request.POST['date']
+    #     result = query5(date)
+    #     context = {"text": text, "result": result, "date": date}
+    #     return render(request, 'core/query5.html', context)
 
 
 def query6(request):
