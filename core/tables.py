@@ -29,10 +29,15 @@ class Table3(tables.Table):
     count = tables.Column(verbose_name='%')
 
     class Meta:
+        model = Payment
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table4(tables.Table):
+    id = tables.Column(verbose_name='id')
+    order = tables.Column(accessor='order.info.id', verbose_name='order_id')
+    price = tables.Column(verbose_name='price')
+
     class Meta:
         model = Payment
         template_name = 'django_tables2/bootstrap-responsive.html'

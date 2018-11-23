@@ -125,6 +125,8 @@ class Order(models.Model):
 class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     time_of_payment = models.DateTimeField(default=datetime.datetime.now())
+    price = models.IntegerField(default=0)
+
 
 class ProvidedPart(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)

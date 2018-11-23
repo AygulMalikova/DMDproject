@@ -12,3 +12,6 @@ admin.site.register(models.Car)
 admin.site.register(models.Operator)
 admin.site.register(models.Customer)
 admin.site.register(models.Charge)
+admin.site.register(models.Payment)
+admin.site.register(models.Order)
+

@@ -38,7 +38,6 @@ def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
     return Table3(ans)
 
 
-
 def query4(username):
     payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))
     payments.filter(order__customer__username=username)
