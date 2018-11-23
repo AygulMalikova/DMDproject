@@ -21,21 +21,21 @@ def query2(date):
 
 def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo):
     orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=7))
-    morning = []
-    afternoon = []
-    evening = []
-    for i in range(morningFrom, morningTo+1):
+    morning = orders.filter(time_begin__hour=morningFrom)
+    afternoon = orders.filter(time_begin__hour=afternoonFrom)
+    evening = orders.filter(time_begin__hour=eveningFrom)
+    for i in range(morningFrom+1, morningTo+1):
         morning = morning | orders.filter(time_begin__hour=i)
-    for i in range(afternoonFrom, aftenoonTo+1):
+    for i in range(afternoonFrom+1, aftenoonTo+1):
         afternoon = afternoon | orders.filter(time_begin__hour=i)
-    for i in range(eveningFrom, eveningTo+1):
+    for i in range(eveningFrom+1, eveningTo+1):
         evening = evening | orders.filter(time_begin__hour=i)
     amount_cars = Car.objects.all().count()
-    ans = []
-    ans.append(morning.count()/amount_cars)
-    ans.append(afternoon.count()/amount_cars)
-    ans.append(evening.count()/amount_cars)
-    return Table3(ans)
+    result = []
+    result.append({'percent': (morning.count()/amount_cars)*100})
+    result.append({'percent': (afternoon.count()/amount_cars)*100})
+    result.append({'percent': (evening.count()/amount_cars)*100})
+    return Table3(result)
 
 
 def query4(username):
@@ -45,6 +45,7 @@ def query4(username):
 
 
 def query5(date):
+    result = []
     orders = Order.objects.all().filter(time_begin__day=date.day)
     distance = 0
     duration = 0
@@ -53,8 +54,12 @@ def query5(date):
         second = GeoIP2.geos(e.location_end)
         distance += first.distance(second)
         duration += e.time_end-e.time_begin
-    n = orders.count() + 1
-    return Table5([distance/n, duration/n])
+    n = orders.count()
+    if n == 0:
+        result.append({'avg_distance': 0, 'avg_duration': 0})
+    else:
+        result.append({'avg_distance': distance/n, 'avg_duration': duration/n})
+    return Table5(result)
 
 
 def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo): #return 9 elements: top3 at the morning, top3 at the afternoon and top3 at the evening

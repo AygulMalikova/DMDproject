@@ -26,10 +26,9 @@ class Table2(tables.Table):
 
 
 class Table3(tables.Table):
-    count = tables.Column(verbose_name='%')
+    percent = tables.Column(verbose_name='%')
 
     class Meta:
-        model = Payment
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
