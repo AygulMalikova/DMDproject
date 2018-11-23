@@ -1,10 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load render_table from django_tables2 %}
+{% include 'core/header.html' %}
 
+<div class="container query">
+        <div class="text">
+            <h3>{{ text }}</h3>
+        </div>
+        <div class="sql">
+            <form action="/6/" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="group">
+                    <p>
+                        orders = Order.objects.all() <br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="morning_from" value="{{ morning_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="morning_to" value="{{ morning_to }}">+1):<br>
+                            &#8195;&#8195;morning = orders.filter(time_begin__hour=i) <br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="afternoon_from" value="{{ afternoon_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="afternoon_to" value="{{ afternoon_to }}">+1):<br>
+                            &#8195;&#8195;aftenoon = orders.filter(time_begin__hour=i) <br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="evening_from" value="{{ evening_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="evening_to" value="{{ evening_to }}">+1):<br>
+                            &#8195;&#8195;evening = orders.filter(time_begin__hour=i)
+                         ans = [] <br>
+                        #11111<br>
+                        top1, top2, top3 = "", "", ""<br>
+                        mx1, mx2, mx3 = 0, 0, 0<br>
+                        for e in morning:<br>
+                         &#8195;&#8195;cur = morning \<br>
+                         &#8195;&#8195;.filter(location_begin=e.location_begin)<br>
+                         &#8195;&#8195;if mx3 < cur.count():<br>
+                         &#8195;&#8195; &#8195;&#8195;mx3 = cur.count()<br>
+                         &#8195;&#8195; &#8195;&#8195;top3 = e.location_begin<br>
+                         &#8195;&#8195;if mx2 < mx3:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx2, mx3 = mx3, mx2<br>
+                         &#8195;&#8195; &#8195;&#8195;top2, top3 = top3, top2<br>
+                         &#8195;&#8195;if mx1 < mx2:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx1,mx2 = mx2, mx1<br>
+                         &#8195;&#8195; &#8195;&#8195;top1, top2 = top2, top1<br>
+                        ans.append(top1)<br>
+                        ans.append(top2)<br>
+                        ans.append(top3)<br>
+                        #22222<br>
+                        top1, top2, top3 = "", "", ""<br>
+                        mx1, mx2, mx3 = 0, 0, 0<br>
+                        for e in afternoon:<br>
+                         &#8195;&#8195;cur = afternoon \<br>
+                         &#8195;&#8195;.filter(location_begin=e.location_begin)<br>
+                         &#8195;&#8195;if mx3 < cur.count():<br>
+                         &#8195;&#8195; &#8195;&#8195;mx3 = cur.count()<br>
+                         &#8195;&#8195; &#8195;&#8195;top3 = e.location_begin<br>
+                         &#8195;&#8195;if mx2 < mx3:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx2, mx3 = mx3, mx2<br>
+                         &#8195;&#8195; &#8195;&#8195;top2, top3 = top3, top2<br>
+                         &#8195;&#8195;if mx1 < mx2:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx1, mx2 = mx2, mx1<br>
+                         &#8195;&#8195; &#8195;&#8195;top1, top2 = top2, top1<br>
+                        ans.append(top1)<br>
+                        ans.append(top2)<br>
+                        ans.append(top3)<br>
+                        #33333<br>
+                        top1, top2, top3 = "", "", ""<br>
+                        mx1, mx2, mx3 = 0, 0, 0<br>
+                        for e in evening:<br>
+                         &#8195;&#8195;cur = evening \<br>
+                        &#8195;&#8195;.filter(location_begin=e.location_begin)<br>
+                         &#8195;&#8195;if mx3 < cur.count():<br>
+                         &#8195;&#8195; &#8195;&#8195;mx3 = cur.count()<br>
+                         &#8195;&#8195; &#8195;&#8195;top3 = e.location_begin<br>
+                         &#8195;&#8195;if mx2 < mx3:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx2, mx3 = mx3, mx2<br>
+                         &#8195;&#8195; &#8195;&#8195;top2, top3 = top3, top2<br>
+                         &#8195;&#8195;if mx1 < mx2:<br>
+                         &#8195;&#8195; &#8195;&#8195;mx1, mx2 = mx2, mx1<br>
+                         &#8195;&#8195; &#8195;&#8195;top1, top2 = top2, top1<br>
+                        ans.append(top1)<br>
+                        ans.append(top2)<br>
+                        ans.append(top3)<br>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <button id="apply">Apply</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            {% render_table result %}
+        </div>
+        <table>
+            <thead class="thead">
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            <tr class="tr">
+                <td>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
 </body>
 </html>

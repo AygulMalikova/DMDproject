@@ -13,14 +13,14 @@
                         orders = Order.objects.all().<br>
                         filter(time_begin__gte=datetime.date.today() -<br>
                         datetime.timedelta(days=7))<br>
-                        for i in range(<input class="short" type="text" name="morning_from" value="{{ morning_from }}">,
-                        <input class="short" type="text" name="morning_to" value="{{ morning_to }}">+1):<br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="morning_from" value="{{ morning_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="morning_to" value="{{ morning_to }}">+1):<br>
                             &#8195;&#8195;morning = orders.filter(time_begin__hour=i) <br>
-                        for i in range(<input class="short" type="text" name="afternoon_from" value="{{ afternoon_from }}">,
-                        <input class="short" type="text" name="afternoon_to" value="{{ afternoon_to }}">+1):<br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="afternoon_from" value="{{ afternoon_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="afternoon_to" value="{{ afternoon_to }}">+1):<br>
                             &#8195;&#8195;aftenoon = orders.filter(time_begin__hour=i) <br>
-                        for i in range(<input class="short" type="text" name="evening_from" value="{{ evening_from }}">,
-                        <input class="short" type="text" name="evening_to" value="{{ evening_to }}">+1):<br>
+                        for i in range(<input class="short" min="1" max ="24" type="number" name="evening_from" value="{{ evening_from }}">,
+                        <input class="short" min="1" max ="24" type="number" name="evening_to" value="{{ evening_to }}">+1):<br>
                             &#8195;&#8195;evening = orders.filter(time_begin__hour=i)
                         amount_cars = Car.objects.all().count()
                         ans = []

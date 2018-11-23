@@ -3,6 +3,7 @@ from django.shortcuts import render
 import datetime
 from django.contrib.gis.geoip2 import GeoIP2
 
+
 def index(request):
     return render(request, 'core/index.html')
 
@@ -26,6 +27,8 @@ def query1(request):
         result = query1(plate, color)
         context = {"text": text, "result": result, "plate": plate, "color": color}
         return render(request, 'core/query1.html', context)
+    else:
+        return redirect('/1')
 
 
 def query2(request):
@@ -38,7 +41,7 @@ def query2(request):
         dateday = 21
         date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
-        context = {"text": text, "result": result,  "year": dateyear, "month": datemonth, "day": dateday}
+        context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}
         return render(request, 'core/query2.html', context)
 
     if request.method == 'POST':
@@ -57,6 +60,7 @@ def query3(request):
            "They need to gather statistics for one week on how many cars are busy " \
            "(% to the total amount of taxis) during the morning (7AM - 10 AM), " \
            "afternoon (12AM - 2PM) and evening (5PM - 7PM) time."
+
     if request.method == 'GET':
         morning_from = 7
         morning_to = 10
@@ -116,8 +120,8 @@ def query4(request):
 def query5(request):
     from .queries import query5
     text = "The department of development has requested the following statistics: " \
-        "- Average distance a car has to travel per day to customer’s order location - Average trip duration"\
-        " Given a date as an input, compute the statistics above."
+           "- Average distance a car has to travel per day to customer’s order location - Average trip duration" \
+           " Given a date as an input, compute the statistics above."
     if request.method == 'GET':
         dateyear = 2018
         datemonth = 11
@@ -143,8 +147,41 @@ def query6(request):
            "the company decided to distribute cars according to demand locations. " \
            "Your task is to compute top-3 most popular pick-up locations and travel destination for each time of day: " \
            "morning (7am-10am), afternoon (12am-2pm) and evening (5pm-7pm)."
-    context = {'text': text}
-    return render(request, 'core/header.html', context)
+    if request.method == 'GET':
+        morning_from = 7
+        morning_to = 10
+        afternoon_from = 12
+        afternoon_to = 14
+        evening_from = 17
+        evening_to = 19
+        result = query6(morning_from, morning_to, afternoon_from, afternoon_to, evening_from, evening_to)
+        context = {"text": text, "result": result,
+                   "morning_from": morning_from,
+                   "morning_to": morning_to,
+                   "afternoon_from": afternoon_from,
+                   "afternoon_to": afternoon_to,
+                   "evening_from": evening_from,
+                   "evening_to": evening_to
+                   }
+        return render(request, 'core/query6.html', context)
+
+    if request.method == 'POST':
+        morning_from = request.POST['morning_from']
+        morning_to = request.POST['morning_to']
+        afternoon_from = request.POST['afternoon_from']
+        afternoon_to = request.POST['afternoon_to']
+        evening_from = request.POST['evening_from']
+        evening_to = request.POST['evening_to']
+        result = query6(morning_from, morning_to, afternoon_from, afternoon_to, evening_from, evening_to)
+        context = {"text": text, "result": result,
+                   "morning_from": morning_from,
+                   "morning_to": morning_to,
+                   "afternoon_from": afternoon_from,
+                   "afternoon_to": afternoon_to,
+                   "evening_from": evening_from,
+                   "evening_to": evening_to
+                   }
+        return render(request, 'core/query6.html', context)
 
 
 def query7(request):
@@ -215,4 +252,3 @@ def query10(request):
     result = query10()
     context = {'text': text, "result": result, "attribute": attribute}
     return render(request, 'core/query10.html', context)
-

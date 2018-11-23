@@ -13,7 +13,7 @@
                         percent = <input class="short" type="number" min="0" max="100" name="percent" value="{{ percent }}"> <br>
                         orders = Order.objects.all()<br>
                         .filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=
-                        <input class="short" type="number" name="days" value="{{ days }}">))<br>
+                        <input class="short" type="number" name="days" min="0" value="{{ days }}">))<br>
                         n = Car.objects.all().count()<br>
                         cars = []<br>
                         for e in orders:<br>

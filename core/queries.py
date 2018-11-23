@@ -35,6 +35,7 @@ def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
     return Table3(ans)
 
 
+
 def query4(username):
     payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))
     payments.filter(order__customer__username=username)
@@ -55,28 +56,27 @@ def query5(date):
     return Table5([distance/n, duration/n])
 
 
-def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and top3 at the evening
-    text = "In order to accommodate traveling demand, " \
-           "the company decided to distribute cars according to demand locations. " \
-           "Your task is to compute top-3 most popular pick-up locations and travel destination for each time of day: " \
-           "morning (7am-10am), afternoon (12am-2pm) and evening (5pm-7pm)."
+def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo): #return 9 elements: top3 at the morning, top3 at the afternoon and top3 at the evening
     orders = Order.objects.all()
-    orders1 = orders.filter(time_begin__hour=[7, 8, 9])
-    orders2 = orders.filter(time_begin__hour=[12, 13])
-    orders3 = orders.filter(time_begin__hour=[19, 20, 21])
+    for i in range(morningFrom, morningTo + 1):
+        morning = orders.filter(time_begin__hour=i)
+    for i in range(afternoonFrom, aftenoonTo+1):
+        afternoon = orders.filter(time_begin__hour=i)
+    for i in range(eveningFrom, eveningTo+1):
+        evening = orders.filter(time_begin__hour=i)
     ans = []
     #11111
     top1, top2, top3 = "", "", ""
-    mx1,mx2,mx3 = 0, 0, 0
-    for e in orders1:
-        cur = orders1.filter(location_begin=e.location_begin)
+    mx1, mx2, mx3 = 0, 0, 0
+    for e in morning:
+        cur = morning.filter(location_begin=e.location_begin)
         if mx3 < cur.count():
             mx3 = cur.count()
             top3 = e.location_begin
-        if mx2<mx3:
+        if mx2 < mx3:
             mx2, mx3 = mx3, mx2
             top2, top3 = top3, top2
-        if mx1<mx2:
+        if mx1 < mx2:
             mx1,mx2 = mx2, mx1
             top1, top2 = top2, top1
     ans.append(top1)
@@ -85,8 +85,8 @@ def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and
     #22222
     top1, top2, top3 = "", "", ""
     mx1, mx2, mx3 = 0, 0, 0
-    for e in orders2:
-        cur = orders2.filter(location_begin=e.location_begin)
+    for e in afternoon:
+        cur = afternoon.filter(location_begin=e.location_begin)
         if mx3 < cur.count():
             mx3 = cur.count()
             top3 = e.location_begin
@@ -102,8 +102,8 @@ def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and
     #33333
     top1, top2, top3 = "", "", ""
     mx1, mx2, mx3 = 0, 0, 0
-    for e in orders3:
-        cur = orders3.filter(location_begin=e.location_begin)
+    for e in evening:
+        cur = evening.filter(location_begin=e.location_begin)
         if mx3 < cur.count():
             mx3 = cur.count()
             top3 = e.location_begin
@@ -116,7 +116,7 @@ def query6(): #return 9 elements: top3 at the morning, top3 at the afternoon and
     ans.append(top1)
     ans.append(top2)
     ans.append(top3)
-    return ans
+    return Table6(ans)
 
 
 def takeFirst(elem):
