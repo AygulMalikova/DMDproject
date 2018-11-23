@@ -27,8 +27,6 @@ def query1(request):
         result = query1(plate, color)
         context = {"text": text, "result": result, "plate": plate, "color": color}
         return render(request, 'core/query1.html', context)
-    else:
-        return redirect('/1')
 
 
 def query2(request):
@@ -38,7 +36,7 @@ def query2(request):
     if request.method == 'GET':
         dateyear = 2018
         datemonth = 11
-        dateday = 21
+        dateday = 19
         date = datetime.date(dateyear, datemonth, dateday)
         result = query2(date)
         context = {"text": text, "result": result, "year": dateyear, "month": datemonth, "day": dateday}

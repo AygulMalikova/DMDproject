@@ -13,20 +13,23 @@ def query1(plate, color):
 
 def query2(date):
     charges = Charge.objects.all().filter(time__day=date.day)
-    amounts = []
+    result = []
     for i in range(24):
-        amounts.append(charges.filter(time__hour=i))
-    return Table2(amounts)
+        result.append({'time': str(i) + ':00', 'amount': charges.filter(time__hour=i).count()})
+    return Table2(result)
 
 
 def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveningTo):
     orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=7))
+    morning = []
+    afternoon = []
+    evening = []
     for i in range(morningFrom, morningTo+1):
-        morning = orders.filter(time_begin__hour=i)
+        morning = morning | orders.filter(time_begin__hour=i)
     for i in range(afternoonFrom, aftenoonTo+1):
-        afternoon = orders.filter(time_begin__hour=i)
+        afternoon = afternoon | orders.filter(time_begin__hour=i)
     for i in range(eveningFrom, eveningTo+1):
-        evening = orders.filter(time_begin__hour=i)
+        evening = evening | orders.filter(time_begin__hour=i)
     amount_cars = Car.objects.all().count()
     ans = []
     ans.append(morning.count()/amount_cars)

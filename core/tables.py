@@ -18,10 +18,10 @@ class Table1(tables.Table):
 
 
 class Table2(tables.Table):
+    time = tables.Column(verbose_name='time')
     amount = tables.Column(verbose_name='amount')
 
     class Meta:
-        model = Charge
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
