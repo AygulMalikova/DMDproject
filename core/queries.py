@@ -1,4 +1,5 @@
 import datetime
+import math
 
 from .tables import Table1, Table2, Table3, Table4, Table5, Table6, Table7, Table8, Table9, Table10
 from .models import Employee, VehicleEngineer, VehiclePark, Workshop, ProvidingManager, CarParts, Car, ChargingStation, \
@@ -41,7 +42,10 @@ def query3(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
 def query4(username):
     payments = Payment.objects.all().filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30))\
         .filter(order__customer__username=username).order_by('time_of_payment')
-    return Table4(payments)
+    result = []
+    for p in payments:
+        result.append({'id': p.id, 'order': p.order_id, 'time': p.time_of_payment, 'price': p.price})
+    return Table4(result)
 
 
 def query5(date):
@@ -50,10 +54,14 @@ def query5(date):
     distance = 0
     duration = 0
     for e in orders:
-        first = GeoIP2.geos(e.location_car)
-        second = GeoIP2.geos(e.location_end)
-        distance += first.distance(second)
-        duration += e.time_end-e.time_begin
+        first = e.location_car.split()
+        second = e.location_end.split()
+        x1 = int(first[0])
+        y1 = int(first[1])
+        x2 = int(second[0])
+        y2 = int(second[1])
+        distance += math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
+        duration += (e.time_end.hour - e.time_begin.hour)*60 + e.time_end.minute-e.time_begin.time().minute
     n = orders.count()
     if n == 0:
         result.append({'avg_distance': 0, 'avg_duration': 0})
@@ -70,7 +78,7 @@ def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
         afternoon = orders.filter(time_begin__hour=i)
     for i in range(eveningFrom, eveningTo+1):
         evening = orders.filter(time_begin__hour=i)
-    ans = []
+    result = []
     #11111
     top1, top2, top3 = "", "", ""
     mx1, mx2, mx3 = 0, 0, 0
@@ -85,9 +93,9 @@ def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
         if mx1 < mx2:
             mx1,mx2 = mx2, mx1
             top1, top2 = top2, top1
-    ans.append(top1)
-    ans.append(top2)
-    ans.append(top3)
+    result.append({'top_morning_1': top1})
+    result.append({'top_morning_1': top2})
+    result.append({'top_morning_1': top3})
     #22222
     top1, top2, top3 = "", "", ""
     mx1, mx2, mx3 = 0, 0, 0
@@ -102,9 +110,9 @@ def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
         if mx1 < mx2:
             mx1, mx2 = mx2, mx1
             top1, top2 = top2, top1
-    ans.append(top1)
-    ans.append(top2)
-    ans.append(top3)
+    result.append({'top_afternoon_1': top1})
+    result.append({'top_afternoon_1': top2})
+    result.append({'top_afternoon_1': top3})
     #33333
     top1, top2, top3 = "", "", ""
     mx1, mx2, mx3 = 0, 0, 0
@@ -119,10 +127,63 @@ def query6(morningFrom, morningTo, afternoonFrom, aftenoonTo, eveningFrom, eveni
         if mx1 < mx2:
             mx1, mx2 = mx2, mx1
             top1, top2 = top2, top1
-    ans.append(top1)
-    ans.append(top2)
-    ans.append(top3)
-    return Table6(ans)
+
+    result.append({'top_evening_1': top1})
+    result.append({'top_evening_1': top2})
+    result.append({'top_evening_1': top3})
+    #11111destination
+    top1, top2, top3 = "", "", ""
+    mx1, mx2, mx3 = 0, 0, 0
+    for e in evening:
+        cur = morning.filter(location_end=e.location_end)
+        if mx3 < cur.count():
+            mx3 = cur.count()
+            top3 = e.location_begin
+        if mx2 < mx3:
+            mx2, mx3 = mx3, mx2
+            top2, top3 = top3, top2
+        if mx1 < mx2:
+            mx1, mx2 = mx2, mx1
+            top1, top2 = top2, top1
+    result.append({'top_morning_2': top1})
+    result.append({'top_morning_2': top2})
+    result.append({'top_morning_2': top3})
+    #22222destination
+    top1, top2, top3 = "", "", ""
+    mx1, mx2, mx3 = 0, 0, 0
+    for e in evening:
+        cur = afternoon.filter(location_end=e.location_end)
+        if mx3 < cur.count():
+            mx3 = cur.count()
+            top3 = e.location_begin
+        if mx2 < mx3:
+            mx2, mx3 = mx3, mx2
+            top2, top3 = top3, top2
+        if mx1 < mx2:
+            mx1, mx2 = mx2, mx1
+            top1, top2 = top2, top1
+    result.append({'top_afternoon_2': top1})
+    result.append({'top_afternoon_2': top2})
+    result.append({'top_afternoon_2': top3})
+    #33333destination
+    top1, top2, top3 = "", "", ""
+    mx1, mx2, mx3 = 0, 0, 0
+    for e in evening:
+        cur = evening.filter(location_end=e.location_end)
+        if mx3 < cur.count():
+            mx3 = cur.count()
+            top3 = e.location_begin
+        if mx2 < mx3:
+            mx2, mx3 = mx3, mx2
+            top2, top3 = top3, top2
+        if mx1 < mx2:
+            mx1, mx2 = mx2, mx1
+            top1, top2 = top2, top1
+    result.append({'top_evening_2': top1})
+    result.append({'top_evening_2': top2})
+    result.append({'top_evening_2': top3})
+
+    return Table6(result)
 
 
 def takeFirst(elem):
@@ -138,35 +199,33 @@ def query7(perc, lastdays):
         current = orders.filter(car=e.car)
         cars.append((current.count, e.car))
     cars.sort(key=takeFirst)
-    ans = []
-    for i in range(0, int(n*(percent/100))):
-        ans.append(cars[i][1])
-    return Table7(ans)
+    result = []
+    for i in range(0, int(math.ceil(n*(percent/100)))):
+        result.append(cars[i][1])
+    return Table7(result)
 
 
 def query8(days):#returns pair(customer, amount)
     customers = Customer.objects.all()
     orders = Order.objects.all().filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=days))
     charges = Charge.objects.all().filter(time__gte=datetime.date.today() - datetime.timedelta(days=days))
-    ans = []
+    result = []
     for e in customers:
-        current = orders.filter(Customer = e)
+        current = orders.filter(customer_id=e)
         amount = 0
         for c in current:
             amount += charges.filter(car=c.car).filter(time__day=c.time_begin.day).count()
-        ans.append((e, amount))
-    return Table8(ans)
+        result.append({'customer': e.username, 'amount': amount})
+    return Table8(result)
 
 
 def query9(days):#returns list of pairs(workshop, amount)
     provided_parts = ProvidedPart.objects.all().filter(time_of_providing=datetime.date.today() - datetime.timedelta(days=days))
     workshops = Workshop.objects.all()
-    ws = []
-    amount = []
+    result = []
     for w in workshops:
-        ws.append(w)
-        amount.append(provided_parts.filter(workshop=w).count())
-    return Table9([ws, amount])
+        result.append({'workshop': w.workshopid, 'amount': provided_parts.filter(workshop=w).count()})
+    return Table9(result)
 
 
 def query10():#returs car model
@@ -175,6 +234,7 @@ def query10():#returs car model
     cars = Car.objects.all()
     max = 0
     best = cars[0]
+    result = []
     for c in cars:
         used_parts = provided_parts.filter(car_part__car__model=c.model)
         current = 0
@@ -186,5 +246,6 @@ def query10():#returs car model
         if max < current:
             max = current
             best = c
-    return Table10([best.model])
+    result.append({'best': best.model, "cost": max})
+    return Table10(result)
 

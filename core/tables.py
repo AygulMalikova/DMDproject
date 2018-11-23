@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from .models import Car, Charge, Order, Payment
+from .models import Car, Charge, Order, Payment, Customer
 
 
 class Table1(tables.Table):
@@ -34,11 +34,11 @@ class Table3(tables.Table):
 
 class Table4(tables.Table):
     id = tables.Column(verbose_name='id')
-    order = tables.Column(accessor='order.info.id', verbose_name='order_id')
+    order = tables.Column( verbose_name='order_id')
+    time = tables.Column( verbose_name='time_of_payment')
     price = tables.Column(verbose_name='price')
 
     class Meta:
-        model = Payment
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
@@ -51,6 +51,14 @@ class Table5(tables.Table):
 
 
 class Table6(tables.Table):
+    top_morning_1 = tables.Column(verbose_name="Top morning pick-up locations")
+    top_afternoon_1 = tables.Column(verbose_name="Top afternoon pick-up locations")
+    top_evening_1 = tables.Column(verbose_name="Top evening pick-up locations")
+
+    top_morning_2 = tables.Column(verbose_name="Top morning destination")
+    top_afternoon_2 = tables.Column(verbose_name="Top afternoon destination")
+    top_evening_2 = tables.Column(verbose_name="Top evening destination")
+
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
 
@@ -70,14 +78,15 @@ class Table7(tables.Table):
 
 
 class Table8(tables.Table):
-    sum = tables.Column(verbose_name='sum')
+    customer = tables.Column(verbose_name='customer')
+    amount = tables.Column(verbose_name='amount')
 
     class Meta:
         template_name = 'django_tables2/bootstrap-responsive.html'
 
 
 class Table9(tables.Table):
-    workshop = tables.Column(verbose_name='workshop')
+    workshop = tables.Column(verbose_name='workshop_id')
     amount = tables.Column(verbose_name='amount')
 
     class Meta:
@@ -85,7 +94,7 @@ class Table9(tables.Table):
 
 
 class Table10(tables.Table):
-    car_model = tables.Column(verbose_name='model')
+    best = tables.Column(verbose_name='model')
     cost = tables.Column(verbose_name='cost')
 
     class Meta:
