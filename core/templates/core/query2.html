@@ -10,13 +10,14 @@
                 {% csrf_token %}
                 <div class="group">
                     <p>
-                        Charge.objects.all() <br>
+                        charges = Charge.objects.all() <br>
                         .filter(time__day='(<input class="middle" type="number" max="2018" name="year" value="{{ year }}">-
                         <input class="short" type="number" min="1" max="12" name="month" value="{{ month }}">-
                         <input class="short" type="number" min="1" max="31" name="day" value="{{ day }}">').day <br>
-                        amounts = [] <br>
+                        result = [] <br>
                         for i in range(24): <br>
-                        &#8195;&#8195;amounts.append(charges.filter(time__hour=i))
+                        &#8195;&#8195;result.append({'time': str(i) + ':00',\ <br>
+                         &#8195;&#8195;'amount': charges.filter(time__hour=i).count()})
                     </p>
                 </div>
                 <div class="form-group">

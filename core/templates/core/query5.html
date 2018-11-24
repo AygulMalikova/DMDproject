@@ -21,9 +21,13 @@
                         &#8195;&#8195;second = GeoIP2.geos(e.location_end) <br>
                         &#8195;&#8195;distance += first.distance(second) <br>
                         &#8195;&#8195;duration += e.time_end-e.time_begin <br>
+                        result = []
                         n = orders.count() <br>
-                        avg_distance = distance/n <br>
-                        avg_duration = duration/n
+                        if n == 0:<br>
+                        result.append({'avg_distance': 0, 'avg_duration': 0})<br>
+                        else:<br>
+                        &#8195;&#8195;result.append({'avg_distance': distance/n, \ <br>
+                        &#8195;&#8195;'avg_duration': duration/n})<br>
                     </p>
                 </div>
                 <div class="form-group">

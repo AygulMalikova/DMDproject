@@ -23,10 +23,10 @@
                         <input class="short" min="1" max ="24" type="number" name="evening_to" value="{{ evening_to }}">+1):<br>
                             &#8195;&#8195;evening = orders.filter(time_begin__hour=i)
                         amount_cars = Car.objects.all().count()
-                        ans = []
-                        ans.append(morning.count()/amount_cars)
-                        ans.append(afternoon.count()/amount_cars)
-                        ans.append(evening.count()/amount_cars)
+                        result = []
+                        result.append({'percent': (morning.count()/amount_cars)*100})
+                        result.append({'percent': (afternoon.count()/amount_cars)*100})
+                        result.append({'percent': (evening.count()/amount_cars)*100})
                     </p>
                 </div>
                 <div class="form-group">

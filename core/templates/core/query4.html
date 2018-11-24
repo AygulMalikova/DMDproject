@@ -12,8 +12,12 @@
                     <p>
                         payments = Payment.objects.all() <br>
                         .filter(time_of_payment__gte=datetime.date.today() - datetime.timedelta(days=30)) <br>
-                        payments.filter(order__customer__username=<input type="text" name="username" value="{{ username }}">)
-                        payments = payments.order_by('time_of_payment')
+                        .filter(order__customer__username=<input type="text" name="username" value="{{ username }}">) <br>
+                        .order_by('time_of_payment') <br>
+                        result = [] <br>
+                        for p in payments: <br>
+                        &#8195;&#8195;result.append({'id': p.id, 'order': p.order_id, \
+                        &#8195;&#8195;'time': p.time_of_payment, 'price': p.price}) <br>
                     </p>
                 </div>
                 <div class="form-group">

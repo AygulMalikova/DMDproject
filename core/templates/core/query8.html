@@ -16,14 +16,14 @@
                         .filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=within_last_days))<br>
                         charges = Charge.objects.all()<br>
                         .filter(time__gte=datetime.date.today() - datetime.timedelta(days=within_last_days))<br>
-                        ans = []<br>
+                        result = []<br>
                         for e in customers:<br>
                         &#8195;&#8195;current = orders.filter(Customer = e)<br>
                         &#8195;&#8195;amount = 0<br>
                         &#8195;&#8195;for c in current:<br>
                         &#8195;&#8195;&#8195;&#8195;amount += charges.filter(car=c.car) \<br>
                          &#8195;&#8195;&#8195;&#8195;.filter(time__day=c.time_begin.day).count()<br>
-                        &#8195;&#8195;ans.append((e, amount))<br>
+                        &#8195;&#8195;result.append({'customer': e.username, 'amount': amount})<br>
                     </p>
                 </div>
                 <div class="form-group">

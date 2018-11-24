@@ -20,9 +20,9 @@
                          &#8195;&#8195;current = orders.filter(car=e.car)<br>
                          &#8195;&#8195;cars.append((current.count, e.car))<br>
                         cars.sort(key=takeFirst)<br>
-                        ans = []<br>
-                        for i in range(0, int(n*(percent/100))):<br>
-                        &#8195;&#8195;ans.append(cars[i][1])
+                        result = []<br>
+                         for i in range(0, int(math.ceil(n*(percent/100)))):<br>
+                        &#8195;&#8195;result.append(cars[i][1])
                     </p>
                 </div>
                 <div class="form-group">

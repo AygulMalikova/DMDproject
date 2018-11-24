@@ -14,11 +14,9 @@
                         .filter(time_begin__gte=datetime.date.today() - datetime.timedelta(days=
                         <input class="short" type="number" name="days" value="{{ days }}">)) <br>
                         workshops = Workshop.objects.all() <br>
-                        ws = []<br>
-                        amount = []<br>
+                        result = []<br>
                         for w in workshops:<br>
-                        &#8195;&#8195;ws.append(w)
-                        &#8195;&#8195;amount.append(provided_parts.filter(workshop=w).count()) <br>
+                        &#8195;&#8195;result.append({'workshop': w.workshopid, 'amount': provided_parts.filter(workshop=w).count()})
                     </p>
                 </div>
                 <div class="form-group">

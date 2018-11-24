@@ -15,6 +15,7 @@
                         cars = Car.objects.all()<br>
                         max = 0<br>
                         best = cars[0]<br>
+                        result = []<br>
                         for c in cars:<br>
                         &#8195;&#8195;used_parts = provided_parts.filter(car_part__car__model=c.model)<br>
                         &#8195;&#8195;current = 0<br>
@@ -26,7 +27,7 @@
                         &#8195;&#8195;if max < current:<br>
                         &#8195;&#8195;&#8195;&#8195;max = current<br>
                         &#8195;&#8195;&#8195;&#8195;best = c<br>
-                        return best.model
+                        result.append({'best': best.model, "cost": max})
                     </p>
                 </div>
                 <div class="form-group">
