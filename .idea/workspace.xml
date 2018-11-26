@@ -4,7 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="845e3fb6-d4ed-4d5e-9a40-3cd549a13db7" name="Default" comment="" />
+    <list default="true" id="845e3fb6-d4ed-4d5e-9a40-3cd549a13db7" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
