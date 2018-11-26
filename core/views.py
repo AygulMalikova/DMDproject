@@ -164,12 +164,12 @@ def query6(request):
         return render(request, 'core/query6.html', context)
 
     if request.method == 'POST':
-        morning_from = request.POST['morning_from']
-        morning_to = request.POST['morning_to']
-        afternoon_from = request.POST['afternoon_from']
-        afternoon_to = request.POST['afternoon_to']
-        evening_from = request.POST['evening_from']
-        evening_to = request.POST['evening_to']
+        morning_from = int(request.POST['morning_from'])
+        morning_to = int(request.POST['morning_to'])
+        afternoon_from = int(request.POST['afternoon_from'])
+        afternoon_to = int(request.POST['afternoon_to'])
+        evening_from = int(request.POST['evening_from'])
+        evening_to = int(request.POST['evening_to'])
         result = query6(morning_from, morning_to, afternoon_from, afternoon_to, evening_from, evening_to)
         context = {"text": text, "result": result,
                    "morning_from": morning_from,
