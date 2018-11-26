@@ -18,7 +18,6 @@ class VehicleEngineer(models.Model):
     info = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
 
-
 class Workshop(models.Model):
     workshopid = models.IntegerField(default=0, primary_key=True)
     country = models.TextField(default="")
@@ -101,7 +100,6 @@ class Customer(models.Model):
     city = models.TextField(default="")
     phone_number = models.TextField(default="")
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
-    car = models.OneToOneField(Car, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return u"%s" % self.username
@@ -111,6 +109,7 @@ class Charge(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     charging_station = models.ForeignKey(ChargingStation, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.datetime.now())
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 
 class Order(models.Model):
@@ -121,6 +120,7 @@ class Order(models.Model):
     location_begin = models.TextField(default="")
     location_end = models.TextField(default="")
     location_car = models.TextField(default="")
+
 
 class Payment(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
