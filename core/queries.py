@@ -207,7 +207,7 @@ def query8(days):#returns pair(customer, amount)
 
 
 def query9(days):#returns list of pairs(workshop, amount)
-    provided_parts = ProvidedPart.objects.all().filter(time_of_providing=datetime.date.today() - datetime.timedelta(days=days))
+    provided_parts = ProvidedPart.objects.all().filter(time_of_providing__gte=datetime.date.today() - datetime.timedelta(days=days))
     workshops = Workshop.objects.all()
     result = []
     for w in workshops:

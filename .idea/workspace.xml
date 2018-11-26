@@ -6,20 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="845e3fb6-d4ed-4d5e-9a40-3cd549a13db7" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0001_initial.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0002_auto_20181122_1559.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0003_auto_20181123_1447.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0004_auto_20181123_1505.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0005_auto_20181123_1538.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0006_auto_20181123_1540.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0007_auto_20181123_1553.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0008_auto_20181123_1558.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0009_auto_20181123_1642.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0010_auto_20181126_0758.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0011_auto_20181126_0834.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0012_auto_20181126_0854.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/core/migrations/0013_auto_20181126_0859.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change beforePath="$PROJECT_DIR$/core/queries.py" afterPath="$PROJECT_DIR$/core/queries.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,8 +47,8 @@
       <file leaf-file-name="queries.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/queries.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="132" column="21" lean-forward="false" selection-start-line="132" selection-start-column="21" selection-end-line="132" selection-end-column="21" />
+            <state relative-caret-position="401">
+              <caret line="219" column="8" lean-forward="false" selection-start-line="219" selection-start-column="8" selection-end-line="219" selection-end-column="8" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -435,8 +422,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/queries.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="132" column="21" lean-forward="false" selection-start-line="132" selection-start-column="21" selection-end-line="132" selection-end-column="21" />
+        <state relative-caret-position="401">
+          <caret line="219" column="8" lean-forward="false" selection-start-line="219" selection-start-column="8" selection-end-line="219" selection-end-column="8" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
